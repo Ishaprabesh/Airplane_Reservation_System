@@ -1,7 +1,9 @@
-public class Passenger {
+import java.io.Serializable;
+
+public class Passenger implements Serializable {
+    public int age;
     private String firstName;        //do I make these private or public?
     private String lastName;
-    public int age;
 
     Passenger(String firstName, String lastName, int age) {
         this.firstName = firstName;

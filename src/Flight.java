@@ -37,8 +37,7 @@ public class Flight {
         if (passengers.size() < totalPass) {
             passengers.add(p);
             currentPass++;
-        }
-        else{
+        } else {
             g = null;
             JOptionPane.showMessageDialog(null,
                     "Sorry the flight is full"

@@ -1,4 +1,6 @@
-public class BoardingPass {
+import java.io.Serializable;
+
+public class BoardingPass implements Serializable {
     Passenger passenger;
     Airline airline;
     Gate gate;
