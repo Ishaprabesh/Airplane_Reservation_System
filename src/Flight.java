@@ -33,6 +33,46 @@ public class Flight {
         //handle error case
     }
 
+    public Airline getAeroplane() {
+        return aeroplane;
+    }
+
+    public void setAeroplane(Airline aeroplane) {
+        this.aeroplane = aeroplane;
+    }
+
+    public double getCurrentPass() {
+        return currentPass;
+    }
+
+    public void setCurrentPass(double currentPass) {
+        this.currentPass = currentPass;
+    }
+
+    public double getTotalPass() {
+        return totalPass;
+    }
+
+    public void setTotalPass(double totalPass) {
+        this.totalPass = totalPass;
+    }
+
+    public ArrayList<Passenger> getPassengers() {
+        return passengers;
+    }
+
+    public void setPassengers(ArrayList<Passenger> passengers) {
+        this.passengers = passengers;
+    }
+
+    public Gate getG() {
+        return g;
+    }
+
+    public void setG(Gate g) {
+        this.g = g;
+    }
+
     public void addPassenger(Passenger p) {
         if (passengers.size() < totalPass) {
             passengers.add(p);
