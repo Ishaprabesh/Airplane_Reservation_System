@@ -19,12 +19,36 @@ public abstract class Airline implements Serializable {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public double getFlightNo() {
         return flightNo;
     }
 
+    public void setFlightNo(double fl) {
+        this.flightNo = fl;
+    }
+
+    public Gate getGate() {
+        return gate;
+    }
+
     public void setGate(Gate gate) {
         this.gate = gate;
+    }
+
+    public ArrayList<Passenger> getPassengers() {
+        return passengers;
+    }
+
+    public void setPassengers(ArrayList<Passenger> passengers) {
+        this.passengers = passengers;
+    }
+
+    public double getTotalPassengers() {
+        return this.totalPassengers;
     }
 
     public void setTotalPassengers(double tots) {
