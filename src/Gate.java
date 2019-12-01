@@ -21,7 +21,7 @@ public class Gate implements Serializable {
         int gateNoIndex = random.nextInt(18);
         gateNo = gateNoArray[gateNoIndex];
 
-        gate = "Gate " + terminal + gateNo;
+        gate = "<html><b>Gate " + terminal + gateNo + "</b></html>";
     }
 
     public String getGate() {

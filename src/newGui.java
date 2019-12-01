@@ -1,9 +1,43 @@
+import javax.security.auth.kerberos.KerberosTicket;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.nio.ByteOrder;
 
 public class newGui {
+//    private static void setKeyBindings(Container comp, int keyCode, String id, ActionListener actionListener) {
+//        JPanel jp =  (JPanel) comp;
+//        InputMap inMap = jp.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+//        ActionMap aMap = jp.getActionMap();
+//        KeyStroke ks = KeyStroke.getKeyStroke(keyCode, 0, true);
+//        inMap.put(ks, id);
+//        AbstractAction abstractAction = new AbstractAction() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                actionListener.actionPerformed(e);
+//            }
+//        };
+//        aMap.put(id, abstractAction);
+//    }
+//    private static void resetKeyBindings(KeyStroke ks, Container comp) {
+//        JPanel cp = ((JPanel) comp);
+//        ActionMap aMap = cp.getActionMap();
+//        InputMap inMap = cp.getInputMap();
+//        inMap.put(ks, null);
+//        aMap.put(ks, null);
+//    }
+
+//    private static Action openPassengerList= new AbstractAction() {
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            //call the method which creates the scrollpane thingie
+//        }
+//
+//    };
+
     public static void main(String[] args) {
         JFrame frame = new JFrame("Purdue University Flight Reservation System");
         frame.setSize(500, 300);
@@ -12,39 +46,55 @@ public class newGui {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         JButton exit = new JButton("Exit");
 
-        JPanel jPanel = new JPanel();
+        JPanel mainPanel = new JPanel();
+        BorderLayout borderLayout = new BorderLayout();
+        mainPanel.setLayout(borderLayout);
+        JPanel topJPanel = new JPanel();
         JPanel jPanel1 = new JPanel();
+        jPanel1.setLayout(borderLayout);
         JPanel jPanel2 = new JPanel();
-        BoxLayout boxLayout = new BoxLayout(jPanel, BoxLayout.Y_AXIS);
-        jPanel.setLayout(boxLayout);
-        JLabel myLabel = new JLabel("<html><b>Choose a flight from the drop down menu.</b><html>");
-        JLabel bigText = new JLabel("<html><div style= 'text-align: center;'>" + "Delta Airlines is proud " +
-                "to be one of the five premier Airlines at Purdue University.<br>We are extremely proud to offer " +
-                "exceptional services, with free limited Wifi for all customers.<br>Passengers who use T-Mobile " +
-                "as a cell phone carrier get additional benefits.<br>We are also happy to offer power outlets in " +
-                "each seat for passenger use.<br>We hope you choose to fly Delta as your next " +
-                "Airline.</div></html>");
+        JPanel jPanel3 = new JPanel();
+
+        Gate gate = new Gate();
+//        jPanel1.add(new JLabel("<html><b>Flight data displaying for " + "\nEnjoy your flight!\n" +
+//                "Flight is now boarding at " + gate.getGate()));
+//        jPanel2.add(new JLabel("<html><b>Enjoy your flight!"));
+//        jPanel3.add(new JLabel("Flight is now boarding at " + gate.getGate()));
+//
+//        topJPanel.add(jPanel1, BorderLayout.PAGE_START);
+//        topJPanel.add(jPanel2, BorderLayout.CENTER);
+//        topJPanel.add(jPanel3, BorderLayout.PAGE_END);
+//        mainPanel.add(topJPanel, BorderLayout.PAGE_START);
+//        frame.add(mainPanel);
+//
+//        frame.setVisible(true);
 
 
-        jPanel1.add(myLabel, BorderLayout.NORTH);
-//        frame.add(jPanel, BorderLayout.NORTH);
-
-        JComboBox <String> myBox = new JComboBox<>();
-        myBox.addItem("Delta");
-        myBox.addItem("Southwest");
-        myBox.addItem("Alaska");
-//        jPanel1.add(myBox, BorderLayout.SOUTH);
-
-        frame.add(jPanel1, BorderLayout.NORTH);
+//        JPanel jPanel1a = new JPanel();
+//        JPanel jPanel1b = new JPanel();
+//        JPanel jPanel1c = new JPanel();
+//        jPanel1a.add(new JLabel("<html><b>Flight data displaying for  </b></html>"));
+//        jPanel1b.add(new JLabel("<html><b>Enjoy your flight!</b></html>"));
+//        jPanel1c.add(new JLabel("<html><b>Flight is now boarding at " + gate.getGate() + "</b></html>"));
+//        jPanel1.add(jPanel1a, BorderLayout.PAGE_START);
+//        jPanel1.add(jPanel1b, BorderLayout.CENTER);
+//        jPanel1.add(jPanel1c, BorderLayout.PAGE_END);
+//
+//
+//        jPanel2.add(new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+//                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER));
+//        BoardingPass boardingPass = new BoardingPass(passenger, airline, gate);
+//        jPanel3.add(boardingPass.toString());
+//        frame.add(jPanel1, BorderLayout.NORTH);
 //        frame.add(jPanel2, BorderLayout.CENTER);
+//        frame.add(jPanel3, BorderLayout.SOUTH);
 
+        frame.pack();
 
-        Font myFont = myLabel.getFont();
-        jPanel2.add(myBox, BorderLayout.NORTH);
-        jPanel2.add(bigText, BorderLayout.SOUTH);
-        bigText.setFont(new Font (myLabel.getFont().getName(), Font.PLAIN, 10));
-        frame.add(jPanel2, BorderLayout.CENTER);
         frame.setVisible(true);
 
+
+
     }
+
 }

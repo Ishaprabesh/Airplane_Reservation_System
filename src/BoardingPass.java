@@ -15,11 +15,13 @@ public class BoardingPass implements Serializable {
     }
 
     public String toString() {
-        return "BOARDING PASS FOR FLIGHT 18000 WITH " + airline.getName().toUpperCase() +
-                "\nPASSENGER FIRST NAME : " + passenger.getFirstName().toUpperCase() +
-                "\nPASSENGER LAST NAME : " + passenger.getLastName().toUpperCase() +
-                "PASSENGER AGE : " + passenger.getAge() +
-                "You can now begin boarding at gate " + gate.getGate();
+        return "<html>----------------------------------------------------------------------" +
+                "<br>BOARDING PASS FOR FLIGHT 18000 WITH " + airline.getName().toUpperCase() + " AIRLINES" +
+                "<br>PASSENGER FIRST NAME : " + passenger.getFirstName().toUpperCase() +
+                "<br>PASSENGER LAST NAME : " + passenger.getLastName().toUpperCase() +
+                "<br>PASSENGER AGE : " + passenger.getAge() +
+                "<br>You can now begin boarding at " + gate.getGate() +
+                "<br>----------------------------------------------------------------------</html>";
 
     }
 }
