@@ -16,6 +16,7 @@ public class GUIs {
     static Passenger passenger;
     static Airline airline;
     static Gate gate;
+
     public static void main(String[] args) {
         //Thread t = new Thread();
         String host = JOptionPane.showInputDialog(null,
@@ -174,7 +175,7 @@ public class GUIs {
                 "as a cell phone carrier get additional benefits.<br>We are also happy to offer power outlets in " +
                 "each seat for passenger use.<br>We hope you choose to fly Delta as your next " +
                 "Airline.</div></html>";
-        String bigTextSouthwest ="<html><div style= 'text-align: center;'>" +
+        String bigTextSouthwest = "<html><div style= 'text-align: center;'>" +
                 "Southwest Airlines is proud to offer flights to Purdue University.<br>We are happy to offer " +
                 "free in flight wifi, as well as our amazing snacks.<br>In addition, we offer flights for " +
                 "much cheaper than other airlines, and offer two free checked bags.<br>We hope you choose Southwest" +
@@ -194,11 +195,11 @@ public class GUIs {
         //JPanel1 end
 
         //JPanel2 start
-        JComboBox <String> myBox = new JComboBox<>();
+        JComboBox<String> myBox = new JComboBox<>();
         myBox.addItem("Delta");
         myBox.addItem("Southwest");
         myBox.addItem("Alaska");
-        bigText.setFont(new Font (intro.getFont().getName(), Font.PLAIN, 10));
+        bigText.setFont(new Font(intro.getFont().getName(), Font.PLAIN, 10));
         bigText.setText(bigTextDelta);
         myBox.addActionListener(new ActionListener() {
             @Override
@@ -211,6 +212,7 @@ public class GUIs {
                 } else if (airline != null && airline.equals("Alaska")) {
                     bigText.setText(bigTextAlaska);
                 }
+                frame.getContentPane().requestFocus();
             }
         });
 
@@ -249,7 +251,7 @@ public class GUIs {
                     airline.setName("Alaska");
                 }
                 frame.setVisible(false);
-                inputYourInfo();
+                flightConfirmation();
             }
         });
         jPanel3.add(exit);
@@ -258,7 +260,8 @@ public class GUIs {
         ////end of chooseFlight button
         //JPanel3 end
 
-        //Start of KeyBinding backSlash
+
+        //Start of KeyBinding
         JPanel contentPane = (JPanel) frame.getContentPane();
         ActionMap aMap = contentPane.getActionMap();
         InputMap inMap = contentPane.getInputMap();
@@ -269,10 +272,14 @@ public class GUIs {
         AbstractAction abstractAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                myBox.requestFocus();
+                myBox.revalidate();
+                contentPane.revalidate();
                 createTinyFrame(myBox.getSelectedItem().toString());
 
-                ActionMap aMap2 = contentPane.getActionMap(); //is contentpane the container for the tiny frame?
-                InputMap inMap2 = contentPane.getInputMap();
+                JPanel tinyContentPane = (JPanel) tinyFrame.getContentPane();
+                ActionMap aMap2 = tinyContentPane.getActionMap();
+                InputMap inMap2 = tinyContentPane.getInputMap();
 
                 KeyStroke escape = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, true);
                 inMap2.put(escape, "closePassengerList");
@@ -288,11 +295,9 @@ public class GUIs {
             }
         };
         aMap.put("openPassengerList", abstractAction);
-        //End of KeyBinding backSlash
+        //End of KeyBinding
 
-        //Start of KeyBinding escape
 
-        //End of KeyBinding escape
         frame.setVisible(true);
     }
 
@@ -308,10 +313,10 @@ public class GUIs {
             title = new JLabel("<html><b>Delta Airlines.</html></b>");
         } else if (airline.equals("Southwest")) {
             title = new JLabel("<html><b>Southwest Airlines.</html></b>");
-        } else if (airline.equals("Alaska")) {
-            title = new JLabel("<html><bAlaska Airlines.</html></b>");
+        } else {
+            title = new JLabel("<html><b>Alaska Airlines.</html></b>");
         }
-        title.setFont(new Font (title.getFont().getName(), Font.BOLD, 17));
+        title.setFont(new Font(title.getFont().getName(), Font.BOLD, 17));
 
         JPanel jPanel = new JPanel();
         JPanel jPanel1 = new JPanel();
@@ -350,6 +355,66 @@ public class GUIs {
         tinyFrame.setVisible(true);
     }
 
+    public static void flightConfirmation() {
+        frame.removeAll();
+        JFrame frame = new JFrame("Purdue University Flight Reservation System");
+        frame.setSize(500, 300);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);                                    //placing JFrame in the middle
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        JButton exit = new JButton("Exit");
+
+        JPanel jPanel3 = new JPanel();
+        JPanel jPanel4 = new JPanel();
+
+        jPanel3.add(new JLabel("<html><b>Are you sure that you want to book a flight on " + airline.getName() +
+                " Airlines?</b><html>"), BorderLayout.NORTH);
+        frame.add(jPanel3, BorderLayout.NORTH);
+
+        frame.add(Box.createRigidArea(new Dimension(500, 300)));
+
+        //start of exit button
+        exit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setVisible(false);
+                frame.dispose();
+            }
+        });
+        //end of exit button
+
+        //start of notBook button
+        JButton notBookFlight = new JButton("No, I want a different flight.");
+        notBookFlight.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setVisible(false);
+                dropDownDialog();
+            }
+        });
+        //end of notBook button
+
+        //start of book button
+        JButton bookFlight = new JButton("Yes, I want this flight.");
+        bookFlight.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setVisible(false);
+                inputYourInfo();
+            }
+        });
+        //end of book button
+
+        jPanel4.add(exit, BorderLayout.NORTH);
+        jPanel4.add(notBookFlight, BorderLayout.CENTER);
+        jPanel4.add(bookFlight, BorderLayout.SOUTH);
+        frame.add(jPanel4, BorderLayout.SOUTH);
+
+
+        frame.pack();
+        frame.setVisible(true);
+    }
+
     public static void inputYourInfo() {
         frame.removeAll();
         frame = new JFrame("Purdue University Flight Reservation System");
@@ -369,19 +434,21 @@ public class GUIs {
                 , BorderLayout.NORTH);
         jPanel.add(jPanel2);
 
+        //TODO- figure out how to keep the size of the jtextarea constant, ask Pranjal which one is better
+        // (specifying the size or not specifying). Not specifying gives horizontal freedom, specifying gives a
+        // little vertical freedom
         JLabel firstName = new JLabel("What is your first name?");
         firstName.setAlignmentX(Component.LEFT_ALIGNMENT);
         jPanel.add(firstName);
-        jtextArea = new JTextArea();
-
+        jtextArea = new JTextArea(3, 15);
         jPanel.add(jtextArea);
 
         jPanel.add(new JLabel("What is your last name?"));
-        jtextArea1 = new JTextArea();
+        jtextArea1 = new JTextArea(3, 15);
         jPanel.add(jtextArea1);
 
         jPanel.add(new JLabel("What is your age?"));
-        jtextArea2 = new JTextArea();
+        jtextArea2 = new JTextArea(3, 15);
         jPanel.add(jtextArea2);
 
         JButton next = new JButton("Next");
@@ -423,67 +490,65 @@ public class GUIs {
     }
 
     public static void inputValidation() {
-        //Start of input validation
-        ////start of checking for null
         b = true;
         if (jtextArea.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Please enter first name.", "Error",
                     JOptionPane.ERROR_MESSAGE);
             b = false;
+        } else {
+            String jtextAreaLower = jtextArea.getText().toLowerCase();
+            for (int i = 0; i < jtextArea.getText().length(); i++) {
+                char c = jtextAreaLower.charAt(i);
+                if (c >= 'a' && c <= 'z') {
+                    b = true;
+                } else {
+                    b = false;
+                    break;
+                }
+            }
+            if (b == false) {
+                JOptionPane.showMessageDialog(null, "Please enter a valid first name.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
         if (jtextArea1.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Please enter last name.", "Error",
                     JOptionPane.ERROR_MESSAGE);
             b = false;
+        } else {
+            String jtextArea1Lower = jtextArea1.getText().toLowerCase();
+            for (int i = 0; i < jtextArea1.getText().length(); i++) {
+                char c = jtextArea1Lower.charAt(i);
+                if (c >= 'a' && c <= 'z') {
+                    b = true;
+                } else {
+                    b = false;
+                    break;
+                }
+            }
+            if (b == false) {
+                JOptionPane.showMessageDialog(null, "Please enter a valid last name.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
         if (jtextArea2.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Please enter age.", "Error",
                     JOptionPane.ERROR_MESSAGE);
             b = false;
-        }
-        ////end of checking for null
-
-        /////start of checking for respective Strings and ints
-        String jtextAreaLower = jtextArea.getText().toLowerCase();
-        for (int i = 0; i < jtextArea.getText().length(); i++) {
-            char c = jtextAreaLower.charAt(i);
-            if (c >= 'a' && c <= 'z') {
-                b = true;
-            } else {
+        } else {
+            try {
+                int ageInt = Integer.parseInt(jtextArea2.getText());
+                if (ageInt < 0) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid age.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    b = false;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Please enter a valid age.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
                 b = false;
-                break;
             }
         }
-        if (b == false) {
-            JOptionPane.showMessageDialog(null, "Please enter a valid first name.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-        String jtextArea1Lower = jtextArea1.getText().toLowerCase();
-        for (int i = 0; i < jtextArea1.getText().length(); i++) {
-            char c = jtextArea1Lower.charAt(i);
-            if (c >= 'a' && c <= 'z') {
-                b = true;
-            } else {
-                b = false;
-                break;
-            }
-        }
-        if (b == false) {
-            JOptionPane.showMessageDialog(null, "Please enter a valid last name.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-
-        try {
-            int ageInt = Integer.parseInt(jtextArea2.getText());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Please enter a valid age.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-        /////start of checking for respective Strings and ints
-        //end of input validation
     }
 
     public static void lastDialog() {
@@ -494,44 +559,32 @@ public class GUIs {
         frame.setLocationRelativeTo(null);                                    //placing JFrame in the middle
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-
-        JPanel mainPanel = new JPanel();
         BorderLayout borderLayout = new BorderLayout();
-        mainPanel.setLayout(borderLayout);
         JPanel jPanel1 = new JPanel();
-        jPanel1.setLayout(borderLayout);
         JPanel jPanel2 = new JPanel();
+        jPanel2.setLayout(borderLayout);
         JPanel jPanel3 = new JPanel();
 
-        JPanel jPanel1a = new JPanel();
-        JPanel jPanel1b = new JPanel();
-        JPanel jPanel1c = new JPanel();
-        jPanel1a.add(new JLabel("<html><b>Flight data displaying for " + airline.getName()
-                + " Airlines </b></html>"));
-        jPanel1b.add(new JLabel("<html><b>Enjoy your flight!</b></html>"));
-        jPanel1c.add(new JLabel("<html><b>Flight is now boarding at " + gate.getGate() + "</b></html>"));
-        jPanel1.add(jPanel1a, BorderLayout.PAGE_START);
-        jPanel1.add(jPanel1b, BorderLayout.CENTER);
-        jPanel1.add(jPanel1c, BorderLayout.PAGE_END);
+        jPanel1.add(new JLabel("<html><b><center>Flight data displaying for " + airline.getName()
+                        + " Airlines<br>Enjoy your flight!<br>Flight is now boarding at " + gate.getGate()
+                        + "</center></b></html>")
+                , BorderLayout.CENTER);
 
-
-        jPanel2.setLayout(borderLayout);
         jPanel2.add(new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), BorderLayout.AFTER_LAST_LINE);
-
-        jPanel3.setLayout(borderLayout);
-        JPanel jPanel3a = new JPanel();
-        JPanel jPanel3b = new JPanel();
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), BorderLayout.NORTH);
         BoardingPass boardingPass = new BoardingPass(passenger, airline, gate);
         jPanel2.add(new JLabel(boardingPass.toString()), BorderLayout.SOUTH);
+
+
+        jPanel3.add(exit);
         exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setVisible(false);
-                frame.dispose();
+                JOptionPane.showMessageDialog(null, "<html>Thank you for using the Purdue " +
+                                "University<br>Airline Management System!<html>", "Thank You!",
+                        JOptionPane.PLAIN_MESSAGE);
             }
         });
-        jPanel3b.add(exit);
 
         JButton refreshStatus = new JButton("Refresh Flight Status");
         refreshStatus.addActionListener(new ActionListener() {
@@ -540,22 +593,12 @@ public class GUIs {
                 //TODO
             }
         });
-        jPanel3b.add(refreshStatus);
-//        jPanel3.add(jPanel3a, BorderLayout.NORTH);
-//        jPanel3.add(jPanel3b, BorderLayout.SOUTH);
-//
-//
-//        mainPanel.add(jPanel1, BorderLayout.NORTH);
-//        mainPanel.add(jPanel2, BorderLayout.CENTER);
-//        mainPanel.add(jPanel3, BorderLayout.SOUTH);
-//        mainPanel.setVisible(true);
+        jPanel3.add(refreshStatus);
 
         frame.add(jPanel1, BorderLayout.NORTH);
         frame.add(jPanel2, BorderLayout.CENTER);
-        frame.add(jPanel3b, BorderLayout.SOUTH);
+        frame.add(jPanel3, BorderLayout.SOUTH);
 
-
-        //frame.pack();
 
         frame.setVisible(true);
     }
