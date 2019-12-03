@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class GUIs {
     static JFrame frame;
@@ -303,6 +304,10 @@ public class GUIs {
 
 
     public static void createTinyFrame(String airline) {
+        ArrayList<String> deltaPassengers = new ArrayList<>();
+        ArrayList<String> southwestPassengers = new ArrayList<>();
+        ArrayList<String> alaskaPassengers = new ArrayList<>();
+
         tinyFrame = new JFrame("Purdue University Flight Reservation System");
         tinyFrame.setSize(300, 200);
         tinyFrame.setResizable(false);
@@ -310,11 +315,12 @@ public class GUIs {
         JButton exit = new JButton("Exit");
         JLabel title = new JLabel("");
         if (airline.equals("Delta")) {
-            title = new JLabel("<html><b>Delta Airlines.</html></b>");
+            title = new JLabel("<html><b>Delta Airlines. " + deltaPassengers.size() + " : 200" + "</html></b>");
         } else if (airline.equals("Southwest")) {
-            title = new JLabel("<html><b>Southwest Airlines.</html></b>");
+            title = new JLabel("<html><b>Southwest Airlines. " + southwestPassengers.size() + " : 100"
+                    + "</html></b>");
         } else {
-            title = new JLabel("<html><b>Alaska Airlines.</html></b>");
+            title = new JLabel("<html><b>Alaska Airlines. " + alaskaPassengers.size() + " : 100" + "</html></b>");
         }
         title.setFont(new Font(title.getFont().getName(), Font.BOLD, 17));
 
@@ -329,11 +335,40 @@ public class GUIs {
         //JPanel1 End
 
         //JPanel2 Start
-        JScrollPane jsp = new JScrollPane(jPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+        BoxLayout boxLayout = new BoxLayout(jPanel2, BoxLayout.Y_AXIS);
+        jPanel2.setLayout(boxLayout);
+        String passengers = "";
+        if (airline.equals("Delta")) {
+            for (int i = 0; i < deltaPassengers.size(); i++) {
+                passengers += deltaPassengers.get(i);
+                passengers += "\n";
+            }
+            JTextArea myArea = new JTextArea(passengers);
+            jPanel2.add(myArea);
+            JScrollPane jsp = new JScrollPane(myArea);
+            jPanel2.add(jsp);
+        } else if (airline.equals("Southwest")) {
+            for (int i = 0; i < southwestPassengers.size(); i++) {
+                passengers += southwestPassengers.get(i);
+                passengers += "\n";
+            }
+            JTextArea myArea = new JTextArea(passengers);
+            jPanel2.add(myArea);
+            JScrollPane jsp = new JScrollPane(myArea);
+            jPanel2.add(jsp);
+        } else {
+            for (int i = 0; i < alaskaPassengers.size(); i++) {
+                passengers += alaskaPassengers.get(i);
+                passengers += "\n";
+            }
+            JTextArea myArea = new JTextArea(passengers);
+            jPanel2.add(myArea);
+            JScrollPane jsp = new JScrollPane(myArea);
+            jPanel2.add(jsp);
+        }
+        JScrollPane jsp = new JScrollPane(jPanel2, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        jPanel2.add(jsp);
-        //TODO - input needed from client server. Get the passenger's info, make a separate JLabel for each, input
-        //TODO - into the JScrollPane using jsp.add();
+        tinyFrame.add(jsp);
         //JPanel2 End
 
         //JPanel3 Start
