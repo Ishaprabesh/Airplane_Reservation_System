@@ -324,7 +324,7 @@ public class GUIs {
         }
         title.setFont(new Font(title.getFont().getName(), Font.BOLD, 17));
 
-        JPanel jPanel = new JPanel();
+        //JPanel jPanel = new JPanel();
         JPanel jPanel1 = new JPanel();
         JPanel jPanel2 = new JPanel();
         JPanel jPanel3 = new JPanel();
@@ -344,6 +344,7 @@ public class GUIs {
                 passengers += "\n";
             }
             JTextArea myArea = new JTextArea(passengers);
+            myArea.setEditable(false);
             jPanel2.add(myArea);
             JScrollPane jsp = new JScrollPane(myArea);
             jPanel2.add(jsp);
@@ -353,6 +354,7 @@ public class GUIs {
                 passengers += "\n";
             }
             JTextArea myArea = new JTextArea(passengers);
+            myArea.setEditable(false);
             jPanel2.add(myArea);
             JScrollPane jsp = new JScrollPane(myArea);
             jPanel2.add(jsp);
@@ -362,13 +364,11 @@ public class GUIs {
                 passengers += "\n";
             }
             JTextArea myArea = new JTextArea(passengers);
+            myArea.setEditable(false);
             jPanel2.add(myArea);
             JScrollPane jsp = new JScrollPane(myArea);
             jPanel2.add(jsp);
         }
-        JScrollPane jsp = new JScrollPane(jPanel2, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        tinyFrame.add(jsp);
         //JPanel2 End
 
         //JPanel3 Start
@@ -600,17 +600,51 @@ public class GUIs {
         jPanel2.setLayout(borderLayout);
         JPanel jPanel3 = new JPanel();
 
+        //jPanel1 start
         jPanel1.add(new JLabel("<html><b><center>Flight data displaying for " + airline.getName()
                         + " Airlines<br>Enjoy your flight!<br>Flight is now boarding at " + gate.getGate()
                         + "</center></b></html>")
                 , BorderLayout.CENTER);
+        //jPanel1 end
 
-        jPanel2.add(new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), BorderLayout.NORTH);
+        //jPanel2 start
+        ArrayList<String> arrayList = new ArrayList<>();
+        String passengers = "";
+        for (int i = -1; i < arrayList.size(); i++) {
+            if (i == -1) {
+                if (airline.equals("Delta")) {
+                    String ratio = arrayList.size() + " : 200";
+                    passengers += "                                                     ";
+                    passengers += ratio;
+                    passengers += "\n";
+                } else if (airline.equals("Southwest")) {
+                    String ratio = arrayList.size() + " : 100";
+                    passengers += "                                                     ";
+                    passengers += ratio;
+                    passengers += "\n";
+                } else {
+                    String ratio = arrayList.size() + " : 100";
+                    passengers += "                                                     ";
+                    passengers += ratio;
+                    passengers += "\n";
+                }
+            } else {
+                passengers += arrayList.get(i);
+                passengers += "\n";
+            }
+        }
+        JTextArea myArea = new JTextArea(passengers);
+        myArea.setEditable(false);
+        jPanel2.add(myArea);
+        JScrollPane jsp = new JScrollPane(myArea);
+        jPanel2.add(jsp);
+
         BoardingPass boardingPass = new BoardingPass(passenger, airline, gate);
         jPanel2.add(new JLabel(boardingPass.toString()), BorderLayout.SOUTH);
+        //jPanel2 end
 
-
+        //jPanel3 start
+        ////end button start
         jPanel3.add(exit);
         exit.addActionListener(new ActionListener() {
             @Override
@@ -620,15 +654,53 @@ public class GUIs {
                         JOptionPane.PLAIN_MESSAGE);
             }
         });
+        ////end button end
 
+        ////refreshStatus button start
         JButton refreshStatus = new JButton("Refresh Flight Status");
         refreshStatus.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO
+                ArrayList<String> arrayList = new ArrayList<>();
+                String passengers = "";
+                for (int i = -1; i < arrayList.size(); i++) {
+                    if (i == -1) {
+                        if (airline.equals("Delta")) {
+                            String ratio = arrayList.size() + " : 200";
+                            passengers += "                                                     ";
+                            passengers += ratio;
+                            passengers += "\n";
+                        } else if (airline.equals("Southwest")) {
+                            String ratio = arrayList.size() + " : 100";
+                            passengers += "                                                     ";
+                            passengers += ratio;
+                            passengers += "\n";
+                        } else {
+                            String ratio = arrayList.size() + " : 100";
+                            passengers += "                                                     ";
+                            passengers += ratio;
+                            passengers += "\n";
+                        }
+                    } else {
+                        passengers += arrayList.get(i);
+                        passengers += "\n";
+                    }
+                }
+                JTextArea myArea = new JTextArea(passengers);
+                myArea.setEditable(false);
+                jPanel2.remove(myArea);
+                jPanel2.remove(jsp);
+                jPanel2.add(myArea);
+                JScrollPane jsp = new JScrollPane(myArea);
+                jPanel2.add(jsp);
+                jPanel2.revalidate();
+                jPanel2.repaint();
+
             }
         });
         jPanel3.add(refreshStatus);
+        ////refreshStatus button end
+        //jPanel3 end
 
         frame.add(jPanel1, BorderLayout.NORTH);
         frame.add(jPanel2, BorderLayout.CENTER);
